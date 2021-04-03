@@ -22,7 +22,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 });
 
 //課題3
-Route::get('XXX','AAAController@bbb');
+// Route::get('XXX','AAAController@bbb');
 
 //課題4
 Route::group(['prefix' => 'admin','middleware' => 'auth'],function(){
