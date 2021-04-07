@@ -42,8 +42,8 @@ class NewsController extends Controller
         return redirect('admin/news/create'); //カリキュラムでは、もう一度newsを投稿するページの「admin/news/create.blade.php」に移動しています。
     }
     
-    // 以下を追記:投稿したニュースの一覧を表示するため
-  public function index(Request $request)
+    // 投稿したニュースの一覧を表示するため
+    public function index(Request $request)
   {
       $cond_title = $request->cond_title; //$requestの中のcond_titleの値を$cond_titleに代入している,なければnullが代入
       if ($cond_title != '') {
@@ -59,5 +59,55 @@ class NewsController extends Controller
       //index.blade.phpのファイルに取得したレコード（$posts）と、ユーザーが入力した文字列（$cond_title）を渡し、ページを開く
       return view('admin.news.index', ['posts' => $posts, 'cond_title' => $cond_title]);
   }
+  
+  //投稿したニュースを更新/削除 edit Actionは編集画面
+    public function edit(Request $request)
+  {
+      // News Modelからデータを取得する
+      $news = News::find($request->id);
+      if (empty($news)) {
+        abort(404);    
+      }
+      return view('admin.news.edit', ['news_form' => $news]);
+  }
+
+  //update Actionは編集画面から送信されたフォームデータを処理する
+    public function update(Request $request)
+  {
+      // Validationをかける
+      $this->validate($request, News::$rules);
+      // News Modelからデータを取得する
+      //リクエスト時に指定されたidを元にどのニュースの編集画面を表示するか決めているため、idの指定がない場合表示するニュースが見つからずabort(404);が呼び出されて、404エラーになる
+      $news = News::find($request->id); 
+      // 送信されてきたフォームデータを格納する
+      $news_form = $request->all();
+      //画像を変更した時にエラーにならない方法
+      if ($request->remove == 'true') {
+          $news_form['image_path'] = null;
+      } elseif ($request->file('image')) {
+          $path = $request->file('image')->store('public/image');
+          $news_form['image_path'] = basename($path);
+      } else {
+          $news_form['image_path'] = $news->image_path;
+      }
+
+      unset($news_form['image']);
+      unset($news_form['remove']);
+      unset($news_form['_token']);
+
+      // 該当するデータを上書きして保存する
+      $news->fill($news_form)->save();
+
+      return redirect('admin/news');
+  }
+    //データの削除
+    public function delete(Request $request)
+  {
+      // 該当するNews Modelを取得
+      $news = News::find($request->id);
+      // delete()メソッド 削除する
+      $news->delete();
+      return redirect('admin/news/');
+  }  
 
 }

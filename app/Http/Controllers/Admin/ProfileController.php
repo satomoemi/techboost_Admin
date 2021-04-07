@@ -20,20 +20,35 @@ class ProfileController extends Controller
     {
         // Varidationを行う
         $this->validate($request, Profile::$rules);
-        $profile = new Profile;
+        $profiles = new Profile;
         $form = $request->all();
         // フォームから送信されてきた_tokenを削除する{{csrf_field ()}}があり、csrf対策用のトークンが送られてきますがデータベースへ保存するときにいらないので、ここで削除しています。
         unset($form['_token']);
         // データベースに保存する
-        $profile->fill($form);
-        $profile->save();
+        $profiles->fill($form);
+        $profiles->save();
         return redirect('admin/profile/create');
-      
     }
     
-    public function edit()
+    public function index(Request $request)
+  {
+        $cond_title = $request->cond_title;
+        if ($cond_title != '') {
+            $posts = Profile::where('name', $cond_title)->get(); 
+    } else { 
+        $posts = Profile::all();
+    }
+    return view('admin.profile.index', ['posts' => $posts, 'cond_title' => $cond_title]);
+  }
+  
+    
+    public function edit(Request $request)
     {
-        return view('admin.profile.edit');
+         $profiles = Profile::find($request->id);
+      if (empty($profiles)) {
+        abort(404);    
+      }
+        return view('admin.profile.edit',['profiles_form' => $profiles]);
     }
     
     public function update()
