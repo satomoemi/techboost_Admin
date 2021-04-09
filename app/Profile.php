@@ -14,4 +14,11 @@ class Profile extends Model
         'hobby' => 'required',
         'introduction' => 'required',
     );
+    
+    public function histories()
+    {
+      //hasMany主テーブルのあるレコードに対して、従テーブルの複数のレコードが紐付けるとき使う
+      return $this->hasMany('App\ProfileHistory');
+
+    }
 }

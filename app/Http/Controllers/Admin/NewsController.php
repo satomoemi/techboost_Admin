@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 
 // 以下を追記することでNews Modelが扱えるようになる
 use App\News;
+use App\History;
+//なぜ追記？
+use Carbon\Carbon;
+
 
 class NewsController extends Controller
 {
@@ -82,7 +86,7 @@ class NewsController extends Controller
       // 送信されてきたフォームデータを格納する
       $news_form = $request->all();
       //画像を変更した時にエラーにならない方法
-      if ($request->remove == 'true') {
+      if ($request->remove == 'true') {//remove画像を削除するチェックボックス
           $news_form['image_path'] = null;
       } elseif ($request->file('image')) {
           $path = $request->file('image')->store('public/image');
@@ -97,6 +101,13 @@ class NewsController extends Controller
 
       // 該当するデータを上書きして保存する
       $news->fill($news_form)->save();
+      
+      //News Modelを保存するタイミングで、同時に History Modelにも編集履歴を追加するよう実装する
+        $history = new History;
+        $history->news_id = $news->id;
+        //時刻を扱うためにCarbonという日付操作ライブラリを使うCarbonを使って取得した現在時刻を、History Modelの edited_at として記録
+        $history->edited_at = Carbon::now();
+        $history->save();
 
       return redirect('admin/news');
   }

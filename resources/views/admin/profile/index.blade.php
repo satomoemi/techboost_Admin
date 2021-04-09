@@ -33,9 +33,9 @@
                             <tr>
                                 <th width="10%">ID</th>
                                 <th width="20%">名前</th>
-                                <th width="20%">性別</th>
+                                <th width="10%">性別</th>
                                 <th width="20%">趣味</th>
-                                <th width="50%">自己紹介欄</th>
+                                <th width="30%">自己紹介欄</th>
                                 <th width="10%">操作</th>
                             </tr>
                         </thead>
@@ -51,7 +51,9 @@
                                         <div>
                                             <a href="{{ action('Admin\ProfileController@edit', ['id' => $profile->id]) }}">編集</a>
                                         </div>
-                                       
+                                       <div>
+                                            <a href="{{ action('Admin\NewsController@delete', ['id' => $profile->id]) }}">削除</a>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
