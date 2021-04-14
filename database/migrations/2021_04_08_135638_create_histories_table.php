@@ -15,7 +15,7 @@ class CreateHistoriesTable extends Migration
     {
         Schema::create('histories', function (Blueprint $table) {
             $table->bigIncrements('id');//主キー
-            $table->integer('news_id');//integerデータが文字列でもこのキャストを使うことで型を数字にすることができる
+            $table->integer('news_id');//外部キー(必ず単数形の名前にする)/newsレコードのidのデータを代入して関連付けをしてる/integerデータが文字列でもこのキャストを使うことで型を数字にすることができる
             $table->string('edited_at');//stringデータを文字列化するキャスト
             
             $table->timestamps();

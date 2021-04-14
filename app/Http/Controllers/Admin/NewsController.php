@@ -45,6 +45,7 @@ class NewsController extends Controller
         
         return redirect('admin/news/create'); //カリキュラムでは、もう一度newsを投稿するページの「admin/news/create.blade.php」に移動しています。
     }
+ 
     
     // 投稿したニュースの一覧を表示するため
     public function index(Request $request)
@@ -72,6 +73,7 @@ class NewsController extends Controller
       if (empty($news)) {
         abort(404);    
       }
+      //また View テンプレートにnews_form,という変数を渡している
       return view('admin.news.edit', ['news_form' => $news]);
   }
 

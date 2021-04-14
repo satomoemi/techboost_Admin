@@ -1,11 +1,13 @@
-{{-- layouts/admin.blade.phpを読み込む --}}
+{{-- @extends:継承するレイアウトを指定する layouts/admin.blade.phpを読み込む --}}
 @extends('layouts.admin')
-{{-- admin.blade.phpの@yield('title')に'ニュースの新規作成'を埋め込む --}}
+{{-- @section:Bladeレイアウトを拡張するビュー admin.blade.phpの@yield('title')に'ニュースの新規作成'を埋め込む --}}
 @section('title', 'ニュースの新規作成')
 {{-- admin.blade.phpの@yield('content')に以下のタグを埋め込む --}}
 @section('content')
     <div class="container">
         <div class="row">
+            {{--col-md-8:画面サイズに応じてカラムの割合を変更できる md (Medium:タブレットサイズ)--}}
+            {{--mx-auto:コンテンツの中央寄せ--}}
             <div class="col-md-8 mx-auto">
                 <h2>ニュース新規作成</h2>
                 <form action="{{ action('Admin\NewsController@create') }}" method="post" enctype="multipart/form-data">

@@ -15,6 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//middleware:ログインしていない状態で管理画面にアクセスしようとしたときに、ログイン画面にリダイレクトするように
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::get('news/create','Admin\NewsController@add');
     Route::post('news/create','Admin\NewsController@create');//postデータの追加に使用
@@ -40,3 +41,8 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'],function(){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/', 'NewsController@index');
+
+Route::get('/profile', 'ProfileController@index');
+
