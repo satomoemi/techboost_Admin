@@ -20,9 +20,9 @@ body {
     }
     .title {
       width: 100%;
-      position: absolute;
-      bottom: 0;
-      left: 0;
+      position: absolute; //起点からどれだけ離れているかを指定できる
+      bottom: 0; //下からの位置指定
+      left: 0; //左からの位置指定
       background-color: rgba(0, 0, 0, 0.6);
       h1 {
     color: #fff;
