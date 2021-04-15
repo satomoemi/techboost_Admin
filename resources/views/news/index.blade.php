@@ -11,7 +11,7 @@
         @if (!is_null($headline))
             <div class="row">
                 <div class="headline col-md-10 mx-auto">{{--mx-auto:コンテンツの中央寄せ--}}
-                    <div class="row">
+                    <div class="row">{{--row やcol を用いて、画面をN個のカラムに等分することができる--}}
                         <div class="col-md-6">{{--col-{breakpoint}-{n}:画面サイズに応じてカラムの割合を変更する--}}
                             <div class="caption mx-auto">
                                 <div class="image">

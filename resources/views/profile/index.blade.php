@@ -10,18 +10,18 @@
                         <div class="col-md-6">
                             <div class="caption mx-auto">
                                 <div class="title p-2">
-                                    <h1>{{ str_limit($headline->name, 70) }}</h1>
+                                    <h1>Name：{{ str_limit($headline->name, 70) }}</h1>
                                 </div>
                             </div>
                                 <div class="gender">
-                                    <h5>{{ str_limit($headline->gender, 70) }}</h1>
+                                    <h5>Gender：{{ str_limit($headline->gender, 70) }}</h1>
                                 </div>
                                 <div class="hobby">
-                                    <h5>{{ str_limit($headline->hobby, 70) }}</h1>
+                                    <h5>Hobby：{{ str_limit($headline->hobby, 70) }}</h1>
                                 </div>
                         </div>
                         <div class="col-md-6">
-                            <p class="body mx-auto">{{ str_limit($headline->introduction, 650) }}</p>
+                            <p class="body mx-auto">Introduction：{{ str_limit($headline->introduction, 650) }}</p>
                         </div>
                     </div>
                 </div>
@@ -38,16 +38,16 @@
                                     {{ $post->updated_at->format('Y年m月d日') }}
                                 </div>
                                 <div class="title">
-                                    {{ str_limit($post->name, 150) }}
+                                    Name：{{ str_limit($post->name, 150) }}
                                 </div>
                                 <div class="gender">
-                                    {{ str_limit($post->gender, 150) }}
+                                    Gender：{{ str_limit($post->gender, 150) }}
                                 </div>
                                 <div class="hobby">
-                                    {{ str_limit($post->hobby, 150) }}
+                                    Hobby：{{ str_limit($post->hobby, 150) }}
                                 </div>
                                 <div class="body mt-3">
-                                    {{ str_limit($post->introduction, 1500) }}
+                                    Introduction：{{ str_limit($post->introduction, 1500) }}
                                 </div>
                             </div>
                         </div>
