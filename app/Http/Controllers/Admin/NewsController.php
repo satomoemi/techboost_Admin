@@ -10,6 +10,7 @@ use App\News;
 use App\History;
 //なぜ追記？
 use Carbon\Carbon;
+use Storage;
 
 
 class NewsController extends Controller
@@ -30,8 +31,8 @@ class NewsController extends Controller
       
       // フォームから画像が送信されてきたら、保存して、$news->image_path に画像のパスを保存する
       if (isset($form['image'])) { //issetメソッドは引数の中にデータがあるかないかを判断する
-        $path = $request->file('image')->store('public/image'); //fileメソッドは画像をアップロードする。　storeメソッドどこのフォルダにファイルを保存するか、パスを指定する
-        $news->image_path = basename($path); //$pathの中は「public/image/ハッシュ化されたファイル名」が入っている。basenameメソッドパスではなくファイル名だけ取得する。このファイル名をnewsテーブルのimage_pathに代入する
+        $path = Storage::disk('s3')->putFile('/',$form['image'],'public'); //fileメソッドは画像をアップロードする。　storeメソッドどこのフォルダにファイルを保存するか、パスを指定する
+        $news->image_path = Storage::disk('s3')->url($path); //$pathの中は「public/image/ハッシュ化されたファイル名」が入っている。basenameメソッドパスではなくファイル名だけ取得する。このファイル名をnewsテーブルのimage_pathに代入する
       } else {
           $news->image_path = null;
       }
@@ -91,8 +92,8 @@ class NewsController extends Controller
       if ($request->remove == 'true') {//remove画像を削除するチェックボックス
           $news_form['image_path'] = null;
       } elseif ($request->file('image')) {
-          $path = $request->file('image')->store('public/image');
-          $news_form['image_path'] = basename($path);
+          $path = Storage::disk('s3')->putFile('/',$form['image'],'public');
+          $news->image_path = Storage::disk('s3')->url($path);
       } else {
           $news_form['image_path'] = $news->image_path;
       }

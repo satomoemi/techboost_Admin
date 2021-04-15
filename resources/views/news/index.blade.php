@@ -19,7 +19,7 @@
                                     {{--asset:「publicディレクトリ」のパスを返すヘルパ,現在のURLのスキーマ（httpかhttps）を使い、アセットへのURLを生成するメソッド--}}
                                     {{--$headline->image_path:保存した画像のファイル名が入っている--}}
                                     {{--↓これで画像が保存されているパスのURLを生成することができた--}}
-                                        <img src="{{ asset('storage/image/' . $headline->image_path) }}">
+                                        <img src="{{$headline->image_path }}">
                                     @endif
                                 </div>
                                 {{--p-2:全てのサイズに対して,全方向のパディングを0.5rem--}}
@@ -55,7 +55,7 @@
                             </div>
                             <div class="image col-md-6 text-right mt-4">
                                 @if ($post->image_path)
-                                    <img src="{{ asset('storage/image/' . $post->image_path) }}">
+                                    <img src="{{$post->image_path}}">
                                 @endif
                             </div>
                         </div>
