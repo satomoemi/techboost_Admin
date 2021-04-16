@@ -3,25 +3,25 @@
 @section('content')
     <div class="container">
         <hr color="#c0c0c0">
-        @if (!is_null($headline))
+        @if (!is_null($posts))
             <div class="row">
                 <div class="headline col-md-10 mx-auto">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="caption mx-auto">
                                 <div class="title p-2">
-                                    <h1>Name：{{ str_limit($headline->name, 70) }}</h1>
+                                    <h1>Name：{{ str_limit($posts->name, 70) }}</h1>
                                 </div>
                             </div>
                                 <div class="gender">
-                                    <h5>Gender：{{ str_limit($headline->gender, 70) }}</h1>
+                                    <h5>Gender：{{ str_limit($posts->gender, 70) }}</h1>
                                 </div>
                                 <div class="hobby">
-                                    <h5>Hobby：{{ str_limit($headline->hobby, 70) }}</h1>
+                                    <h5>Hobby：{{ str_limit($posts->hobby, 70) }}</h1>
                                 </div>
                         </div>
                         <div class="col-md-6">
-                            <p class="body mx-auto">Introduction：{{ str_limit($headline->introduction, 650) }}</p>
+                            <p class="body mx-auto">Introduction：{{ str_limit($posts->introduction, 650) }}</p>
                         </div>
                     </div>
                 </div>
