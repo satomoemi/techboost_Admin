@@ -12,13 +12,17 @@
                 <h2>ニュース新規作成</h2>
                 <form action="{{ action('Admin\NewsController@create') }}" method="post" enctype="multipart/form-data">
 
+            {{--$errors:validateを設定するとエラーメッセージを操作する便利な$errorsが自動的に作成され、全てのビューで使用できる--}}
+                    {{--countメソッドは配列の個数を返すメソッド--}}
                     @if (count($errors) > 0)
                         <ul>
+                {{--foreachは配列の数だけループする構文.$errors->all()ですべてのエラーの取得し、その中身を$eに代入$eに代入された中身を下記の文で表示--}}
                             @foreach($errors->all() as $e)
                                 <li>{{ $e }}</li>
                             @endforeach
                         </ul>
                     @endif
+                    
                     <div class="form-group row">
                         <label class="col-md-2" for="title">タイトル</label>
                         <div class="col-md-10">
@@ -28,6 +32,7 @@
                     <div class="form-group row">
                         <label class="col-md-2" for="body">本文</label>
                         <div class="col-md-10">
+                 {{--old('変数名'):入力してエラーが出て、その入力したものが全部消えてしまうのを防ぐ。残しておく--}}
                             <textarea class="form-control" name="body" rows="20">{{ old('body') }}</textarea>
                         </div>
                     </div>

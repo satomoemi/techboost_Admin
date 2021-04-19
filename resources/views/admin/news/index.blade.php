@@ -13,6 +13,7 @@
             <div class="col-md-8">
                 <form action="{{ action('Admin\NewsController@index') }}" method="get">
                     <div class="form-group row">
+                {{--labelタグ:HTMLでフォームを作る時に、例えばテキストボックスの横に「名前」であったり、ラジオボタンの横に「男」「女」などの文字を入れたいことがある。その時に便利なタグ--}}
                         <label class="col-md-2">タイトル</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control" name="cond_title" value="{{ $cond_title }}">
@@ -38,10 +39,11 @@
                             </tr>
                         </thead>
                         <tbody>
+                        {{--@foreach を使って取得したデータの一つ一つを処理し、各データの idとtitle.bodyを表示--}}
                             @foreach($posts as $news)
                                 <tr>
                                     <th>{{ $news->id }}</th>
-                                    <td>{{ \Str::limit($news->title, 100) }}</td>
+                                    <td>{{ \Str::limit($news->title, 100) }}</td>{{--\Str::limit():文字列を指定した数値で切り詰める.ただし文字の数は半角で認識する、全角の文字は2文字として認識--}}
                                     <td>{{ \Str::limit($news->body, 250) }}</td>
                                     <td>
                                         <div>

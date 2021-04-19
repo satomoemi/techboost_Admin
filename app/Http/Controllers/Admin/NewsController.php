@@ -54,7 +54,8 @@ class NewsController extends Controller
       $cond_title = $request->cond_title; //$requestの中のcond_titleの値を$cond_titleに代入している,なければnullが代入
       if ($cond_title != '') {
           // 検索されたら検索結果を取得する
-          //newsテーブルの中のtitleカラムで$cond_title（ユーザーが入力した文字）に一致するレコードをすべて取得することができる.取得したテーブルを$posts変数に代入してる
+          //whereメソッドを使うと、newsテーブルの中のtitleカラムで$cond_title（ユーザーが入力した文字）に一致するレコードをすべて取得することができる.取得したテーブルを$posts変数に代入してる
+          //where への引数で検索条件を設定している
           $posts = News::where('title', $cond_title)->get(); 
       } else {
           // それ以外はすべてのニュースを取得する

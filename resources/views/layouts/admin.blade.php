@@ -67,7 +67,9 @@
 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                       onclick="event.preventDefault();{{--JS-リンクをクリックしてもURLを表示しないようにする--}}
+                                       {{--JS-document.getElementById(id):HTMLタグの中から指定したidを取得して何らかの処理をしたい場合など--}}
+                                       {{--JS-submit():Formの送信（submit）処理をプログラムすることができるメソッド--}}
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
