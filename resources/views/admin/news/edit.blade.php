@@ -6,6 +6,7 @@
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <h2>ニュース編集</h2>
+                {{-- enctype="multipart/form-data":ファイルアップロードをする場合に使用.添付ファイルに関する情報とともに、ファイルの本文の情報のデータが格納される--}}
                 <form action="{{ action('Admin\NewsController@update') }}" method="post" enctype="multipart/form-data">
                     @if (count($errors) > 0)
                         <ul>
@@ -42,6 +43,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-10">
+                            {{--<input type="hidden":ユーザーは知る必要がないけど、サーバーには送りたい情報を格納するため--}}
                             <input type="hidden" name="id" value="{{ $news_form->id }}">
                             {{ csrf_field() }}
                             <input type="submit" class="btn btn-primary" value="更新">
@@ -52,8 +54,11 @@
                     <div class="col-md-4 mx-auto">
                         <h2>編集履歴</h2>
                         <ul class="list-group">
-                            {{--$news_form->histories:このnewsレコードに関連しているhistoriesテーブルすべてを取得するメソッド--}}
+                {{--$news_form->histories:このnewsレコードに関連しているhistoriesテーブルすべてを取得するメソッド このメソッドを使うから、newsの変更履歴一覧を取得できる--}}
+                {{--まだ一度も更新したことがなければ、このメソッドはnullを返す--}}
                             @if ($news_form->histories != NULL)
+                            {{--foreach文はnullに対して利用することはできない。もし使ったらエラーになる--}}
+                            {{--このエラーを回避するために、nullでない場合のみforeachを回すように記載--}}
                                 @foreach ($news_form->histories as $history)
                                     <li class="list-group-item">{{ $history->edited_at }}</li>
                                 @endforeach

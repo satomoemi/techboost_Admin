@@ -10,6 +10,7 @@
             {{--mx-auto:コンテンツの中央寄せ--}}
             <div class="col-md-8 mx-auto">
                 <h2>ニュース新規作成</h2>
+                {{--<form>タグにおける”action”は送信先を指定するためのもの--}}
                 <form action="{{ action('Admin\NewsController@create') }}" method="post" enctype="multipart/form-data">
 
             {{--$errors:validateを設定するとエラーメッセージを操作する便利な$errorsが自動的に作成され、全てのビューで使用できる--}}

@@ -31,7 +31,10 @@ class NewsController extends Controller
       
       // フォームから画像が送信されてきたら、保存して、$news->image_path に画像のパスを保存する
       if (isset($form['image'])) { //issetメソッドは引数の中にデータがあるかないかを判断する
-        $path = Storage::disk('s3')->putFile('/',$form['image'],'public'); //fileメソッドは画像をアップロードする。　storeメソッドどこのフォルダにファイルを保存するか、パスを指定する
+      //Storageファサードのdiskメソッドを使用し特定のディスクへアクセスできる
+      //putFile(PATH, $file):指定したPATHにファイルを保存。名前は一意のID
+      //ファイルをpublicとして宣言するのは、他からのアクセスを全般的に許可することを表明すること S3ドライバ使用時には、publicファイルのURLを取得することになる
+        $path = Storage::disk('s3')->putFile('/',$form['image'],'public'); 
         $news->image_path = Storage::disk('s3')->url($path); //$pathの中は「public/image/ハッシュ化されたファイル名」が入っている。basenameメソッドパスではなくファイル名だけ取得する。このファイル名をnewsテーブルのimage_pathに代入する
       } else {
           $news->image_path = null;
@@ -59,7 +62,7 @@ class NewsController extends Controller
           $posts = News::where('title', $cond_title)->get(); 
       } else {
           // それ以外はすべてのニュースを取得する
-          //News Modelを使って、データベースに保存されている、newsテーブルのレコードをすべて取得し、
+          //News::all()はEloquentを使った、すべてのnewsテーブルを取得する
           //whereメソッドwhereへの引数で検索条件を設定,検索条件となる名前が入力されていない場合は、登録してあるすべてのデータを取得
           $posts = News::all(); 
       }
@@ -88,6 +91,7 @@ class NewsController extends Controller
       //リクエスト時に指定されたidを元にどのニュースの編集画面を表示するか決めているため、idの指定がない場合表示するニュースが見つからずabort(404);が呼び出されて、404エラーになる
       $news = News::find($request->id); 
       // 送信されてきたフォームデータを格納する
+      //$news_formには、newsレコードが入っている
       $news_form = $request->all();
       //画像を変更した時にエラーにならない方法
       if ($request->remove == 'true') {//remove画像を削除するチェックボックス
@@ -104,6 +108,7 @@ class NewsController extends Controller
       unset($news_form['_token']);
 
       // 該当するデータを上書きして保存する
+      //$news->fill($news_form);,$news->save();を短縮して書いたもの
       $news->fill($news_form)->save();
       
       //News Modelを保存するタイミングで、同時に History Modelにも編集履歴を追加するよう実装する
@@ -121,6 +126,7 @@ class NewsController extends Controller
       // 該当するNews Modelを取得
       $news = News::find($request->id);
       // delete()メソッド 削除する
+      //データをセーブするときは、$news->save();でsaveメソッドを利用しましたが、データの場合はdelete()メソッドを使う
       $news->delete();
       return redirect('admin/news/');
   }  

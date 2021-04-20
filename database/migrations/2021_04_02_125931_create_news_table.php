@@ -14,7 +14,7 @@ class CreateNewsTable extends Migration
      // title と body と image_path を追記
     public function up()
     {
-        Schema::create('news', function (Blueprint $table) {
+        Schema::create('news', function (Blueprint $table) {//Blueprintオブジェクトのメソッドでカラムを定義する。カラムの型名が、そのままメソッド名になっている
             $table->bigIncrements('id');//主キーのデフォルト
             $table->string('title'); // ニュースのタイトルを保存するカラム
             $table->string('body');  // ニュースの本文を保存するカラム
